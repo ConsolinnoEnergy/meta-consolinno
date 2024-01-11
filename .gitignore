@@ -1,0 +1,5 @@
+*.py?
+/*.patch
+/patches/
+*.sw?
+*~
