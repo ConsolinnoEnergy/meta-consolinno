@@ -1,0 +1,17 @@
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+rpcuser:x:55:55:RPC Service User:/var/lib/nfs:/sbin/nologin
+sshd:x:74:74::/var/run/sshd:/bin/false
+
+bind:!:240
+tss:!:250
+
+messagebus:!:275
+
+systemd-bus-proxy:!:280
+systemd-journal:!:281
+systemd-network:!:282
+systemd-resolve:!:283
+systemd-timesync:!:284
+systemd-journal-gateway:!:285
+systemd-journal-remote:!:286
+systemd-journal-upload:!:287
