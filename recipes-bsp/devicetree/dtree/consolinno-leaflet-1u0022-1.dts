@@ -1,0 +1,7 @@
+#include "imx6ull-phytec-consolinno-basemodule.dts"
+
+/ {
+	/* used by fitimage generator */
+	device-id = <0>;
+	device-description = "consolinno leaflet 1u0022";
+};
