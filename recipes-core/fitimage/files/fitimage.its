@@ -1,0 +1,35 @@
+// --*- dtree -*--
+
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	description = "${DISTRO_NAME} ${DISTRO_VERSION} (${MACHINE})";
+
+	images: images {
+		kernel {
+			data = /incbin/("${DEPLOY_DIR_IMAGE}/zImage");
+			description = "kernel";
+			arch = "arm";
+			type = "kernel";
+			os = "linux";
+
+			hash-1 {
+				algo = "sha256";
+			};
+		};
+	};
+
+	configurations {
+		default = "standard";
+                cfg0: standard {
+                        description = "Standard Boot";
+                        kernel = "kernel";
+                        fdt = "fdt-0x00000000";
+                        ramdisk = "ramdisk-0x00000000";
+                        hash {
+                                algo = "sha256";
+                        };
+                };
+	};
+};
