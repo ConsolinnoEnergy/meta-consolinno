@@ -1,0 +1,3 @@
+#!/bin/sh
+
+bootm ${nv.netpath}/barebox-${nv.machine}.img

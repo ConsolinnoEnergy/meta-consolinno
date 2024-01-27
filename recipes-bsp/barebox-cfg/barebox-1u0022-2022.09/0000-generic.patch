@@ -1,0 +1,287 @@
+From: "Enrico Scholz" <enrico.scholz@sigma-chemnitz.de>
+Subject: 0000-generic
+Date: Fri, 31 Mar 2023 13:08:53 +0200
+X-Committed: Fri, 31 Mar 2023 13:21:50 +0200
+
+Patchset containing changes from:
+
+ 992fb4e5a000 UPSTREAM: scripts: imx: Ignore '; ' and '\n' in quotes
+ 67a59f6d9d91 ARM: configs: omap_defconfig: Enable of_overlay
+ 311e4946f534 UPSTREAM: ARM: configs: Remove NS16550_OMAP_EXTENSIONS
+
+ arch/arm/configs/am335x_mlo_defconfig                         | 1 -
+ arch/arm/configs/am35xx_pfc200_xload_defconfig                | 1 -
+ arch/arm/configs/archosg9_defconfig                           | 1 -
+ arch/arm/configs/archosg9_xload_defconfig                     | 1 -
+ arch/arm/configs/omap3430_sdp3430_per_uart_defconfig          | 1 -
+ arch/arm/configs/omap3530_beagle_defconfig                    | 1 -
+ arch/arm/configs/omap3530_beagle_per_uart_defconfig           | 1 -
+ arch/arm/configs/omap3530_beagle_xload_defconfig              | 1 -
+ arch/arm/configs/omap3_evm_defconfig                          | 1 -
+ arch/arm/configs/omap_defconfig                               | 2 +-
+ arch/arm/configs/panda_defconfig                              | 1 -
+ arch/arm/configs/panda_xload_defconfig                        | 1 -
+ arch/arm/configs/phytec-phycard-omap3-xload_defconfig         | 1 -
+ arch/arm/configs/phytec-phycard-omap3_defconfig               | 1 -
+ arch/arm/configs/phytec-phycard-omap4-xload_defconfig         | 1 -
+ arch/arm/configs/phytec-phycard-omap4_defconfig               | 1 -
+ arch/arm/configs/phytec-phycore-omap4460-xload-mmc_defconfig  | 1 -
+ arch/arm/configs/phytec-phycore-omap4460-xload-nand_defconfig | 1 -
+ arch/arm/configs/phytec-phycore-omap4460_defconfig            | 1 -
+ scripts/imx/imx.c                                             | 6 ++++--
+ 20 files changed, 5 insertions(+), 21 deletions(-)
+
+diff --git a/arch/arm/configs/am335x_mlo_defconfig b/arch/arm/configs/am335x_mlo_defconfig
+index 83bb20e4b50c..57602ba30918 100644
+--- a/arch/arm/configs/am335x_mlo_defconfig
++++ b/arch/arm/configs/am335x_mlo_defconfig
+@@ -21,7 +21,6 @@ CONFIG_SHELL_NONE=y
+ CONFIG_CONSOLE_ACTIVATE_NONE=y
+ CONFIG_OFDEVICE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_SPI_OMAP3=y
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/am35xx_pfc200_xload_defconfig b/arch/arm/configs/am35xx_pfc200_xload_defconfig
+index da55382f0566..710e39ff61da 100644
+--- a/arch/arm/configs/am35xx_pfc200_xload_defconfig
++++ b/arch/arm/configs/am35xx_pfc200_xload_defconfig
+@@ -17,7 +17,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/archosg9_defconfig b/arch/arm/configs/archosg9_defconfig
+index aafd849185c7..dd509fca7266 100644
+--- a/arch/arm/configs/archosg9_defconfig
++++ b/arch/arm/configs/archosg9_defconfig
+@@ -67,7 +67,6 @@ CONFIG_CMD_TIME=y
+ CONFIG_NET=y
+ CONFIG_NET_NETCONSOLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_SERIAL_OMAP4_USBBOOT=y
+ CONFIG_NET_USB=y
+ CONFIG_NET_USB_SMSC95XX=y
+diff --git a/arch/arm/configs/archosg9_xload_defconfig b/arch/arm/configs/archosg9_xload_defconfig
+index 27f471cf0bbb..b6a0475d40fb 100644
+--- a/arch/arm/configs/archosg9_xload_defconfig
++++ b/arch/arm/configs/archosg9_xload_defconfig
+@@ -14,7 +14,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_SERIAL_OMAP4_USBBOOT=y
+ # CONFIG_SPI is not set
+ CONFIG_MCI=y
+diff --git a/arch/arm/configs/omap3430_sdp3430_per_uart_defconfig b/arch/arm/configs/omap3430_sdp3430_per_uart_defconfig
+index d43355cdf1e3..646a392b6b56 100644
+--- a/arch/arm/configs/omap3430_sdp3430_per_uart_defconfig
++++ b/arch/arm/configs/omap3430_sdp3430_per_uart_defconfig
+@@ -23,5 +23,4 @@ CONFIG_CMD_LOADB=y
+ # CONFIG_CMD_CLEAR is not set
+ # CONFIG_CMD_ECHO is not set
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+diff --git a/arch/arm/configs/omap3530_beagle_defconfig b/arch/arm/configs/omap3530_beagle_defconfig
+index 5d09abf61550..e959bdfde304 100644
+--- a/arch/arm/configs/omap3530_beagle_defconfig
++++ b/arch/arm/configs/omap3530_beagle_defconfig
+@@ -72,7 +72,6 @@ CONFIG_NET=y
+ CONFIG_NET_NFS=y
+ CONFIG_NET_NETCONSOLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_NET_USB=y
+ CONFIG_NET_USB_ASIX=y
+ CONFIG_NET_USB_SMSC95XX=y
+diff --git a/arch/arm/configs/omap3530_beagle_per_uart_defconfig b/arch/arm/configs/omap3530_beagle_per_uart_defconfig
+index e4112b49107f..2439bd955ed5 100644
+--- a/arch/arm/configs/omap3530_beagle_per_uart_defconfig
++++ b/arch/arm/configs/omap3530_beagle_per_uart_defconfig
+@@ -22,5 +22,4 @@ CONFIG_CMD_LOADB=y
+ # CONFIG_CMD_CLEAR is not set
+ # CONFIG_CMD_ECHO is not set
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+diff --git a/arch/arm/configs/omap3530_beagle_xload_defconfig b/arch/arm/configs/omap3530_beagle_xload_defconfig
+index e9484ed852bb..0a47479f1892 100644
+--- a/arch/arm/configs/omap3530_beagle_xload_defconfig
++++ b/arch/arm/configs/omap3530_beagle_xload_defconfig
+@@ -17,7 +17,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/omap3_evm_defconfig b/arch/arm/configs/omap3_evm_defconfig
+index 973acbff683d..8c5df029a75a 100644
+--- a/arch/arm/configs/omap3_evm_defconfig
++++ b/arch/arm/configs/omap3_evm_defconfig
+@@ -21,5 +21,4 @@ CONFIG_CMD_RESET=y
+ # CONFIG_CMD_RM is not set
+ # CONFIG_CMD_RMDIR is not set
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+diff --git a/arch/arm/configs/omap_defconfig b/arch/arm/configs/omap_defconfig
+index ae4d1a67da3a..5bb1cfe16d7e 100644
+--- a/arch/arm/configs/omap_defconfig
++++ b/arch/arm/configs/omap_defconfig
+@@ -92,6 +92,7 @@ CONFIG_CMD_OF_NODE=y
+ CONFIG_CMD_OF_PROPERTY=y
+ CONFIG_CMD_OF_DISPLAY_TIMINGS=y
+ CONFIG_CMD_OF_FIXUP_STATUS=y
++CONFIG_CMD_OF_OVERLAY=y
+ CONFIG_CMD_OFTREE=y
+ CONFIG_CMD_TIME=y
+ CONFIG_CMD_STATE=y
+@@ -100,7 +101,6 @@ CONFIG_NET_NFS=y
+ CONFIG_NET_NETCONSOLE=y
+ CONFIG_OF_BAREBOX_DRIVERS=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_NET_CPSW=y
+ CONFIG_DRIVER_NET_DAVINCI_EMAC=y
+ CONFIG_MICREL_PHY=y
+diff --git a/arch/arm/configs/panda_defconfig b/arch/arm/configs/panda_defconfig
+index 9c1efe168a1c..b199e7990bfe 100644
+--- a/arch/arm/configs/panda_defconfig
++++ b/arch/arm/configs/panda_defconfig
+@@ -62,7 +62,6 @@ CONFIG_CMD_TIME=y
+ CONFIG_NET=y
+ CONFIG_NET_NETCONSOLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_NET_USB=y
+ CONFIG_NET_USB_SMSC95XX=y
+ # CONFIG_SPI is not set
+diff --git a/arch/arm/configs/panda_xload_defconfig b/arch/arm/configs/panda_xload_defconfig
+index e3d87c42dd53..bc33882c855a 100644
+--- a/arch/arm/configs/panda_xload_defconfig
++++ b/arch/arm/configs/panda_xload_defconfig
+@@ -12,7 +12,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MCI=y
+ CONFIG_MCI_STARTUP=y
+diff --git a/arch/arm/configs/phytec-phycard-omap3-xload_defconfig b/arch/arm/configs/phytec-phycard-omap3-xload_defconfig
+index 6eab808f7c07..26a539f7f784 100644
+--- a/arch/arm/configs/phytec-phycard-omap3-xload_defconfig
++++ b/arch/arm/configs/phytec-phycard-omap3-xload_defconfig
+@@ -17,7 +17,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/phytec-phycard-omap3_defconfig b/arch/arm/configs/phytec-phycard-omap3_defconfig
+index 6cc1c1e80b3f..a9abf12a138f 100644
+--- a/arch/arm/configs/phytec-phycard-omap3_defconfig
++++ b/arch/arm/configs/phytec-phycard-omap3_defconfig
+@@ -54,7 +54,6 @@ CONFIG_NET_NFS=y
+ CONFIG_NET_NETCONSOLE=y
+ CONFIG_NET_RESOLV=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_NET_SMC911X=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+diff --git a/arch/arm/configs/phytec-phycard-omap4-xload_defconfig b/arch/arm/configs/phytec-phycard-omap4-xload_defconfig
+index af3ada634375..a1859140db0d 100644
+--- a/arch/arm/configs/phytec-phycard-omap4-xload_defconfig
++++ b/arch/arm/configs/phytec-phycard-omap4-xload_defconfig
+@@ -13,7 +13,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/phytec-phycard-omap4_defconfig b/arch/arm/configs/phytec-phycard-omap4_defconfig
+index 2f3970725dce..a0bb846a6d59 100644
+--- a/arch/arm/configs/phytec-phycard-omap4_defconfig
++++ b/arch/arm/configs/phytec-phycard-omap4_defconfig
+@@ -36,7 +36,6 @@ CONFIG_CMD_GPIO=y
+ CONFIG_NET=y
+ CONFIG_NET_NFS=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_NET_KS8851_MLL=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+diff --git a/arch/arm/configs/phytec-phycore-omap4460-xload-mmc_defconfig b/arch/arm/configs/phytec-phycore-omap4460-xload-mmc_defconfig
+index 61f85c837f89..19365a6fcd92 100644
+--- a/arch/arm/configs/phytec-phycore-omap4460-xload-mmc_defconfig
++++ b/arch/arm/configs/phytec-phycore-omap4460-xload-mmc_defconfig
+@@ -15,7 +15,6 @@ CONFIG_SHELL_NONE=y
+ # CONFIG_TIMESTAMP is not set
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MCI=y
+ CONFIG_MCI_STARTUP=y
+diff --git a/arch/arm/configs/phytec-phycore-omap4460-xload-nand_defconfig b/arch/arm/configs/phytec-phycore-omap4460-xload-nand_defconfig
+index 77f124b33f14..14cab44b5dce 100644
+--- a/arch/arm/configs/phytec-phycore-omap4460-xload-nand_defconfig
++++ b/arch/arm/configs/phytec-phycore-omap4460-xload-nand_defconfig
+@@ -16,7 +16,6 @@ CONFIG_SHELL_NONE=y
+ CONFIG_CONSOLE_SIMPLE=y
+ CONFIG_PARTITION=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ # CONFIG_SPI is not set
+ CONFIG_MTD=y
+ # CONFIG_MTD_WRITE is not set
+diff --git a/arch/arm/configs/phytec-phycore-omap4460_defconfig b/arch/arm/configs/phytec-phycore-omap4460_defconfig
+index e65a76570b3f..7d5369cb23be 100644
+--- a/arch/arm/configs/phytec-phycore-omap4460_defconfig
++++ b/arch/arm/configs/phytec-phycore-omap4460_defconfig
+@@ -49,7 +49,6 @@ CONFIG_CMD_TIME=y
+ CONFIG_NET=y
+ CONFIG_NET_NFS=y
+ CONFIG_DRIVER_SERIAL_NS16550=y
+-CONFIG_DRIVER_SERIAL_NS16550_OMAP_EXTENSIONS=y
+ CONFIG_DRIVER_NET_SMC911X=y
+ CONFIG_SMSC_PHY=y
+ # CONFIG_SPI is not set
+diff --git a/scripts/imx/imx.c b/scripts/imx/imx.c
+index 87560ad27de1..c91dfda21483 100644
+--- a/scripts/imx/imx.c
++++ b/scripts/imx/imx.c
+@@ -675,6 +675,7 @@ static char *readcmd(struct config_data *data, FILE *f)
+ 	static char *buf;
+ 	char *str;
+ 	ssize_t ret;
++	int inquotes = 0;
+ 
+ 	if (!buf) {
+ 		buf = malloc(4096);
+@@ -689,8 +690,9 @@ static char *readcmd(struct config_data *data, FILE *f)
+ 		ret = fread(str, 1, 1, f);
+ 		if (!ret)
+ 			return strlen(buf) ? buf : NULL;
+-
+-		if (*str == '\n' || *str == ';') {
++		if (*str == '"') {
++			inquotes = !inquotes;
++		} else if ((*str == '\n' || *str == ';') && !inquotes) {
+ 			*str = 0;
+ 			return buf;
+ 		}

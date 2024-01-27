@@ -1,0 +1,5 @@
+#!/bin/sh
+
+global.bootm.image="/dev/mmc1.factory"
+global.bootm.oftree=""
+global linux.bootargs.bootchooser="rauc.external"

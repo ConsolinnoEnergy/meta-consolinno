@@ -1,0 +1,314 @@
+From: "Enrico Scholz" <enrico.scholz@sigma-chemnitz.de>
+Subject: 0000-generic
+Date: Fri, 26 Jan 2024 19:15:52 +0100
+X-Committed: Fri, 26 Jan 2024 19:15:52 +0100
+
+Patchset containing changes from:
+
+ eeee8e4c2f43 dts:1u0022: remove barebox related partitions on emmc
+ e70350dce5e8 dst:1u0022: disable fec2 for now
+ 2eecb92ef916 dts:1u0022: remove environment partitions
+ 888fe79e4718 phycore: add consolinno leaflet 1u0022
+ 2dbef2b1b199 phytec-som: allow to disable environment
+ 6c5edb6efea7 phytec-som: allow to disable plain mmc boot location
+ 4ea5927c81e4 phytec-som: allow to disable mmc0
+ 435c5a67d9e3 dts:phytec-state: add state set for 3rd bootchooser target
+
+ arch/arm/boards/phytec-som-imx6/board.c    |  36 +++++---
+ arch/arm/boards/phytec-som-imx6/lowlevel.c |   2 +
+ arch/arm/dts/Makefile                      |   1 +
+ arch/arm/dts/imx6ul-phytec-state.dtsi      |  21 ++++-
+ arch/arm/dts/imx6ull-consolinno-1u0022.dts | 122 +++++++++++++++++++++++++++
+ images/Makefile.imx                        |   2 +
+ 6 files changed, 171 insertions(+), 13 deletions(-)
+ create mode 100644 arch/arm/dts/imx6ull-consolinno-1u0022.dts
+
+diff --git a/arch/arm/boards/phytec-som-imx6/board.c b/arch/arm/boards/phytec-som-imx6/board.c
+index bff95221abf3..b1399874cef9 100644
+--- a/arch/arm/boards/phytec-som-imx6/board.c
++++ b/arch/arm/boards/phytec-som-imx6/board.c
+@@ -152,6 +152,9 @@ static int phycore_da9062_setup_buck_mode(void)
+ #define IS_PHYCORE_UL	BIT(3)
+ #define HAS_MMC3	BIT(4)
+ #define HAS_MMC1	BIT(5)
++#define HAS_NO_MMC0	BIT(6)
++#define NO_PLAIN_MMC_BOOT BIT(7)
++#define NO_ENVIRONMENT	BIT(8)
+ 
+ struct board_data {
+ 	unsigned flags;
+@@ -209,9 +212,9 @@ static int physom_imx6_probe(struct device *dev)
+ 		phy_register_fixup_for_uid(PHY_ID_KSZ8081, MICREL_PHY_ID_MASK,
+ 				ksz8081_phy_fixup);
+ 
+-		imx6_bbu_internal_mmc_register_handler("mmc0",
+-						"/dev/mmc0", 0);
+-
++		if (!(flags & HAS_NO_MMC0))
++			imx6_bbu_internal_mmc_register_handler("mmc0",
++							       "/dev/mmc0", 0);
+ 	} else {
+ 		return -EINVAL;
+ 	}
+@@ -236,15 +239,14 @@ static int physom_imx6_probe(struct device *dev)
+ 		break;
+ 	}
+ 
+-	if (environment_path) {
++	if (!(flags & NO_ENVIRONMENT) && environment_path) {
+ 		ret = of_device_enable_path(environment_path);
+ 		if (ret < 0)
+ 			pr_warn("Failed to enable environment partition '%s' (%d)\n",
+ 				environment_path, ret);
+-		free(environment_path);
++		pr_notice("Using environment in %s\n", envdev);
+ 	}
+-
+-	pr_notice("Using environment in %s\n", envdev);
++	free(environment_path);
+ 
+ 	if (flags & HAS_MMC3) {
+ 		imx6_bbu_internal_mmc_register_handler("mmc3",
+@@ -253,11 +255,14 @@ static int physom_imx6_probe(struct device *dev)
+ 		imx6_bbu_internal_mmcboot_register_handler("mmc3-boot",
+ 						"mmc3", 0);
+ 	} else if (flags & HAS_MMC1) {
+-		imx6_bbu_internal_mmc_register_handler("mmc1",
+-						"/dev/mmc1",
+-						BBU_HANDLER_FLAG_DEFAULT);
+-		imx6_bbu_internal_mmcboot_register_handler("mmc1-boot",
+-						"mmc1", 0);
++		if (!(flags & NO_PLAIN_MMC_BOOT))
++			imx6_bbu_internal_mmc_register_handler("mmc1",
++							       "/dev/mmc1",
++							       BBU_HANDLER_FLAG_DEFAULT);
++
++		imx6_bbu_internal_mmcboot_register_handler(
++			"mmc1-boot", "mmc1",
++			(flags & NO_PLAIN_MMC_BOOT) ? BBU_HANDLER_FLAG_DEFAULT : 0);
+ 	} else {
+ 		imx6_bbu_nand_register_handler("nand", BBU_HANDLER_FLAG_DEFAULT);
+ 	}
+@@ -321,6 +326,10 @@ static struct board_data imx6ul_pcl063_emmc = {
+ 	.flags = IS_PHYCORE_UL | HAS_MMC1,
+ };
+ 
++static struct board_data imx6ul_consolinno_1u0022 = {
++	.flags = IS_PHYCORE_UL | HAS_MMC1 | HAS_NO_MMC0 | NO_PLAIN_MMC_BOOT | NO_ENVIRONMENT,
++};
++
+ 
+ static const struct of_device_id physom_imx6_match[] = {
+ 	{
+@@ -356,6 +365,9 @@ static const struct of_device_id physom_imx6_match[] = {
+ 	}, {
+ 		.compatible = "phytec,imx6ul-pcl063-emmc",
+ 		.data = &imx6ul_pcl063_emmc,
++	}, {
++		.compatible = "consolinno,imx6ull-1u0022",
++		.data = &imx6ul_consolinno_1u0022,
+ 	},
+ 	{ /* Sentinel */ },
+ };
+diff --git a/arch/arm/boards/phytec-som-imx6/lowlevel.c b/arch/arm/boards/phytec-som-imx6/lowlevel.c
+index da5665a71618..3a6e03f3474d 100644
+--- a/arch/arm/boards/phytec-som-imx6/lowlevel.c
++++ b/arch/arm/boards/phytec-som-imx6/lowlevel.c
+@@ -115,3 +115,5 @@ PHYTEC_ENTRY(start_phytec_phycore_imx6ul_som_nand_512mb, imx6ul_phytec_phycore_s
+ PHYTEC_ENTRY(start_phytec_phycore_imx6ull_som_lc_nand_256mb, imx6ull_phytec_phycore_som_lc_nand, SZ_256M, false);
+ PHYTEC_ENTRY(start_phytec_phycore_imx6ull_som_nand_512mb, imx6ull_phytec_phycore_som_nand, SZ_512M, false);
+ PHYTEC_ENTRY(start_phytec_phycore_imx6ull_som_emmc_512mb, imx6ull_phytec_phycore_som_emmc, SZ_512M, false);
++
++PHYTEC_ENTRY(start_imx6ull_consolinno_1u0022, imx6ull_consolinno_1u0022, SZ_512M, false);
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 04af3bd64687..c9bd52a333b4 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -76,6 +76,7 @@ lwl-$(CONFIG_MACH_PHYTEC_SOM_IMX6) += imx6q-phytec-phycard.dtb.o \
+ 				imx6dl-phytec-phycore-som-lc-emmc.dtb.o \
+ 				imx6ul-phytec-phycore-som-nand.dtb.o \
+ 				imx6ul-phytec-phycore-som-emmc.dtb.o \
++				imx6ull-consolinno-1u0022.dtb.o \
+ 				imx6ull-phytec-phycore-som-lc-nand.dtb.o \
+ 				imx6ull-phytec-phycore-som-nand.dtb.o \
+ 				imx6ull-phytec-phycore-som-emmc.dtb.o
+diff --git a/arch/arm/dts/imx6ul-phytec-state.dtsi b/arch/arm/dts/imx6ul-phytec-state.dtsi
+index d0cad1b5166a..655ccebaa095 100644
+--- a/arch/arm/dts/imx6ul-phytec-state.dtsi
++++ b/arch/arm/dts/imx6ul-phytec-state.dtsi
+@@ -15,7 +15,7 @@ state: imx6ul_phytec_boot_state {
+ 		backend-type = "raw";
+ 		backend = <&backend_update_eeprom>;
+ 		backend-storage-type = "direct";
+-		backend-stridesize = <54>;
++		backend-stridesize = <58>;
+ 		status = "disabled";
+ 
+ 		bootstate {
+@@ -63,6 +63,25 @@ ok@18 {
+ 					default = <0>;
+ 				};
+ 			};
++			system2 {
++				#address-cells = <1>;
++				#size-cells = <1>;
++				remaining_attempts {
++					reg = <0x1c 0x1>;
++					type = "uint8";
++					default = <1>;
++				};
++				priority {
++					reg = <0x1d 0x1>;
++					type = "uint8";
++					default = <5>;
++				};
++				ok {
++					reg = <0x1e 0x1>;
++					type = "uint8";
++					default = <0>;
++				};
++			};
+ 		};
+ 	};
+ };
+diff --git a/arch/arm/dts/imx6ull-consolinno-1u0022.dts b/arch/arm/dts/imx6ull-consolinno-1u0022.dts
+new file mode 100644
+index 000000000000..ac74b95ef845
+--- /dev/null
++++ b/arch/arm/dts/imx6ull-consolinno-1u0022.dts
+@@ -0,0 +1,122 @@
++// SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
++
++/dts-v1/;
++#ifdef CONFIG_BOOTM_FITIMAGE_PUBKEY
++#include CONFIG_BOOTM_FITIMAGE_PUBKEY
++#endif
++#include <arm/nxp/imx/imx6ull.dtsi>
++#include "imx6ul-phytec-phycore-som.dtsi"
++#include "imx6ul-phytec-state.dtsi"
++
++#include <dt-bindings/leds/common.h>
++
++/ {
++	model = "consolinno leaflet 1u0022";
++	compatible = "consolinno,imx6ull-1u0022", "phytec,imx6ull-pcl063-emmc", "fsl,imx6ull";
++
++	chosen {
++		/* not used and because it might break security, remove potential
++		   environment storage */
++
++		/delete-node/environment-nand;
++		/delete-node/environment-sd1;
++		/delete-node/environment-sd2;
++	};
++};
++
++&iomuxc {
++	pinctrl-names = "default";
++
++	pinctrl_boardver: boardvergrp {
++		fsl,pins = <
++			MX6UL_PAD_CSI_DATA01__GPIO4_IO22		0xa0b0 /* BOARD_VAR_0 */
++			MX6UL_PAD_CSI_DATA02__GPIO4_IO23		0xa0b0 /* BOARD_VAR_0 */
++			MX6UL_PAD_CSI_DATA03__GPIO4_IO24		0xa0b0 /* BOARD_VAR_0 */
++		>;
++	};
++
++	pinctrl_enet2: enet2grp {		/* TODO: verify me! */
++		fsl,pins = <
++			MX6UL_PAD_ENET2_RX_EN__ENET2_RX_EN		0x1b0b0
++			MX6UL_PAD_ENET2_RX_ER__ENET2_RX_ER		0x1b0b0
++			MX6UL_PAD_ENET2_RX_DATA0__ENET2_RDATA00		0x1b0b0
++			MX6UL_PAD_ENET2_RX_DATA1__ENET2_RDATA01		0x1b0b0
++			MX6UL_PAD_ENET2_TX_EN__ENET2_TX_EN		0x1b010
++			MX6UL_PAD_ENET2_TX_DATA0__ENET2_TDATA00		0x1b010
++			MX6UL_PAD_ENET2_TX_DATA1__ENET2_TDATA01		0x1b010
++			MX6UL_PAD_ENET2_TX_CLK__ENET2_REF_CLK2		0x4001b010
++		>;
++	};
++
++	pinctrl_ecspi1: ecspi1grp {		/* TODO */
++		fsl,pins = <
++			MX6UL_PAD_CSI_DATA04__ECSPI1_SCLK		0x0b0b0 /* [121] SOM_CLK */
++			MX6UL_PAD_CSI_DATA06__ECSPI1_MOSI		0x0b0b0 /* [123] SOM_MOSI */
++			MX6UL_PAD_CSI_DATA05__ECSPI1_SS0		0x0b0b0 /* [122] SOM_CS */
++			MX6UL_PAD_CSI_DATA07__ECSPI1_MISO		0x0b0b0 /* [124] SOM_MISO */
++		>;
++	};
++};
++
++&fec1 {
++	status = "okay";
++
++	/* for barebox compatibility */
++	mdio: mdio {};
++};
++
++&fec2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_enet2>;
++	phy-mode = "rmii";
++	phy-handle = <&ethphy2>;
++
++	/* TODO: does not work yet */
++	status = "disabled";
++};
++
++&mdio {
++	ethphy2: ethernet-phy@2 {
++		reg = <2>;
++		micrel,led-mode = <1>;
++		clocks = <&clks IMX6UL_CLK_ENET2_REF>;
++		clock-names = "rmii-ref";
++		status = "okay";
++	};
++};
++
++&ecspi1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_ecspi1>;
++	status = "okay";
++
++	tpm: tpm@0 {
++		compatible = "tpm";
++		reg = <0>;
++	};
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++
++	/* rtc + nfc */
++};
++
++&state {
++        status = "okay";
++};
++
++&usdhc2 {
++	status = "okay";
++
++	/delete-node/partition@0;
++	/delete-node/partition@e0000;
++};
++
++&usbotg1 {
++	status = "okay";
++};
+diff --git a/images/Makefile.imx b/images/Makefile.imx
+index 4cce8bbbf231..074d68227dc0 100644
+--- a/images/Makefile.imx
++++ b/images/Makefile.imx
+@@ -377,6 +377,8 @@ $(call build_imx_habv4img, CONFIG_MACH_PHYTEC_SOM_IMX6, start_phytec_phycore_imx
+ 
+ $(call build_imx_habv4img, CONFIG_MACH_PHYTEC_SOM_IMX6, start_phytec_phycore_imx6ul_som_nand_512mb, phytec-som-imx6/flash-header-phytec-pcl063ul-512mb, phytec-phycore-imx6ul-nand-512mb)
+ 
++$(call build_imx_habv4img, CONFIG_MACH_PHYTEC_SOM_IMX6, start_imx6ull_consolinno_1u0022, phytec-som-imx6/flash-header-phytec-pcl063ull-512mb, imx6ull-consolinno-1u0022)
++
+ $(call build_imx_habv4img, CONFIG_MACH_PHYTEC_SOM_IMX6, start_phytec_phycore_imx6ull_som_lc_nand_256mb, phytec-som-imx6/flash-header-phytec-pcl063ull-256mb, phytec-phycore-imx6ull-lc-nand-256mb)
+ 
+ $(call build_imx_habv4img, CONFIG_MACH_PHYTEC_SOM_IMX6, start_phytec_phycore_imx6ull_som_nand_512mb, phytec-som-imx6/flash-header-phytec-pcl063ull-512mb, phytec-phycore-imx6ull-nand-512mb)

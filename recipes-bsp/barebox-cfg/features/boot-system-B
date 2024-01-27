@@ -1,0 +1,6 @@
+#!/bin/sh
+
+system=system1
+instance=system-B
+
+. /env/bin/fitimage-boot

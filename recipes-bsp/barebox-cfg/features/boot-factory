@@ -1,0 +1,7 @@
+#!/bin/sh
+
+ifup eth0
+
+global.bootm.image="${nv.netpath}/fitimage-1u0022-factory-${nv.machine}.fit"
+global linux.bootargs.bootchooser="rauc.external"
+global linux.bootargs.install="install.factory-init"

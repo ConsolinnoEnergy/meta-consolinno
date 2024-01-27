@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mmc=mmc1
+
+for i in boot; do
+    automount -d /mnt/part-"$i" "${mmc}.probe=1 && [ -e /dev/${mmc}.$i ] && mount -o ro /dev/${mmc}.$i /mnt/part-$i"
+done

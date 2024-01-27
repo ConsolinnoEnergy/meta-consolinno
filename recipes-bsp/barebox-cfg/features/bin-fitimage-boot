@@ -1,0 +1,12 @@
+#!/bin/sh
+
+bootdir=/mnt/part-boot
+
+global.bootm.image="$bootdir/${instance}.fit"
+global.bootm.oftree=""
+
+test -z "$system" ||
+    test -n "${global.linux.bootargs.bootchooser}" ||
+    global linux.bootargs.bootchooser="bootchooser.active=$system"
+
+global.linux.bootargs.dyn.root="root=/dev/vg00/${instance} ro"
