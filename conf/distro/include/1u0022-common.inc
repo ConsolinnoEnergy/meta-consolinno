@@ -8,7 +8,7 @@ DISTRO_NAME = "consolinno leaflet distro"
 
 INIT_MANAGER = "systemd"
 
-DISTRO_FEATURES_DEFAULT:append = " usrmerge"
+DISTRO_FEATURES_DEFAULT:append = " usrmerge tpm2"
 DISTRO_FEATURES_DEFAULT:remove = "alsa bluetooth irda nfc pcmcia pci zeroconf 3g x11 ext2 nfs vfat"
 DISTRO_FEATURES_BACKFILL_CONSIDERED = "pulseaudio bluez5 sysvinit"
 
