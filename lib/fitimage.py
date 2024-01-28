@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from functools import cmp_to_key
 import os.path
 
+_hash_algo = 'sha1'
+
 class OfProperty:
     def __init__(self, key, val):
         self.key = key
@@ -185,6 +187,11 @@ class FitImage(OfNode):
         return super().finish()
 
     @staticmethod
+    def set_global_hash_algo(algo):
+        global _hash_algo
+        _hash_algo = algo
+
+    @staticmethod
     def get_hwid(dtb, id_attr, desc_attr):
         import subprocess
         with subprocess.Popen(["fdtget", dtb, "/", id_attr], stdout = subprocess.PIPE) as proc:
@@ -230,14 +237,17 @@ class FitNode(OfNode):
 
 class FitPart(FitNode):
     def __init__(self, type, instance = None):
+        global _hash_algo
+
         super().__init__(type, instance)
+
         self.type = type
         self.name = type
         self.__data = None
         self.desc = None
         self.arch = "${ARCH}"
         self.compression = None
-        self.hash = "sha1"
+        self.hash = _hash_algo
         self.entry = None
         self.load = None
         self.os = None

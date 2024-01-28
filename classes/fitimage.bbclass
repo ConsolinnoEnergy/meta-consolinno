@@ -89,7 +89,11 @@ def fitimage_generate_its(d, template, output):
             out_file.write(d.expand(in_file.read()))
 
         out_file.write('\n'.join(frag.emit(d)))
+        out_file.write('\n')
 
+do_fitimage_prepare_its[vardeps] += "FITIMAGE_KERNELS FITIMAGE_DTBS FITIMAGE_OVERLAYS FITIMAGE_RAMDISKS"
+do_fitimage_prepare_its[vardeps] += "FITIMAGE_ATTR_ID FITIMAGE_ATTR_DESC"
+do_fitimage_prepare_its[vardeps] += "FITIMAGE_SEARCH_PATH FITIMAGE_TEMPLATE FITIMAGE_ITSFILE"
 do_fitimage_prepare_its[depends] += "${FITIMAGE_COMPONENTS}"
 python do_fitimage_prepare_its() {
     fitimage_generate_its(d, d.getVar('FITIMAGE_TEMPLATE'), d.getVar('FITIMAGE_ITSFILE'))
