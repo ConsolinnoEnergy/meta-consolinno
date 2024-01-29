@@ -3,6 +3,8 @@ Subject: 0000-generic
 Date: Fri, 31 Mar 2023 13:08:53 +0200
 X-Committed: Fri, 31 Mar 2023 13:21:50 +0200
 
+Upstream-Status: Inappropriate [machine specific]
+
 Patchset containing changes from:
 
  992fb4e5a000 UPSTREAM: scripts: imx: Ignore '; ' and '\n' in quotes

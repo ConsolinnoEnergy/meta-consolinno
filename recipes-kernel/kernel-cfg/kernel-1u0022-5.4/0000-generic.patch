@@ -3,6 +3,8 @@ Subject: 0000-generic
 Date: Thu, 21 Sep 2023 15:02:46 +0200
 X-Committed: Thu, 21 Sep 2023 15:02:46 +0200
 
+Upstream-Status: Inappropriate [machine specific]
+
 Patchset containing changes from:
 
  5850686e12c9 ConegxDriver: update to v1.1.5

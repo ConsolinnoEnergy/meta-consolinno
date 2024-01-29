@@ -3,6 +3,8 @@ Subject: 0000-generic
 Date: Fri, 26 Jan 2024 19:15:52 +0100
 X-Committed: Fri, 26 Jan 2024 19:15:52 +0100
 
+Upstream-Status: Inappropriate [machine specific]
+
 Patchset containing changes from:
 
  eeee8e4c2f43 dts:1u0022: remove barebox related partitions on emmc
