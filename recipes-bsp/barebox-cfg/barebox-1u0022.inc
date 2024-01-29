@@ -5,6 +5,8 @@ BAREBOX_DEFCONFIG = "${S}/arch/arm/configs/imx_v7_defconfig"
 
 IMGBASE:consolinno-leaflet-1u0022-1 = "imx6ull-consolinno-1u0022"
 
+DEPENDS += "openssl-native"
+
 inherit barebox-environment-3
 require barebox-passwd.inc
 
