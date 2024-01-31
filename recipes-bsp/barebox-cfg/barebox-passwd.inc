@@ -14,9 +14,11 @@ SRC_URI += "\
     ${@'file://${BAREBOX_PASSWD_FILENAME};subdir=_root' if d.getVar('BAREBOX_PASSWD_FILENAME') else ''}\
 "
 
-EXTRA_OEMAKE += "\
+EXTRA_OEMAKE_release += "\
     CONFIG_PASSWORD_DEFAULT='${BAREBOX_PASSWD_S_NAME}' \
 "
+
+EXTRA_OEMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'release', d.getVar('EXTRA_OEMAKE_release', False), '', d)}"
 
 do_copy_passwd() {
     f='${WORKDIR}/_root/${BAREBOX_PASSWD_FILENAME}'
