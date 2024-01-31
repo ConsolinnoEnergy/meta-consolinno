@@ -13,7 +13,7 @@
 			arch = "arm";
 			type = "kernel";
 			os = "linux";
-
+			compression = "none";
 			hash-1 {
 				algo = "sha256";
 			};
