@@ -21,7 +21,6 @@ IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-1u0022 \
 	docker-ce \
-	docker-compose \
 	crun \
 	podman \
 	podman-compose \
