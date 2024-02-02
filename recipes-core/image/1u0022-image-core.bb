@@ -21,6 +21,7 @@ IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-1u0022 \
 	docker-ce \
+	python3-docker-compose \
 	crun \
 "
 
