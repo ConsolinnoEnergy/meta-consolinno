@@ -14,7 +14,6 @@ DEPENDS += "\
 IMAGE_FEATURES += "${@bb.utils.contains('MACHINE_FEATURES', 'tpm', 'tpm2 tpm2-device', '', d)}"
 IMAGE_FEATURES += "ssh-server-openssh"
 IMAGE_FEATURES += "read-only-rootfs"
-IMAGE_FEATURES += "virtualization"
 
 inherit core-image
 
