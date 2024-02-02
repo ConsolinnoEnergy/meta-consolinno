@@ -27,3 +27,5 @@ do_install() {
 ALLOW_EMPTY:${PN} = "1"
 
 FILES:${PN} = "/*"
+
+TPM_DEV_SECRET = "!!!RemoveMe!!!OnlyForDevelopment!!!"
