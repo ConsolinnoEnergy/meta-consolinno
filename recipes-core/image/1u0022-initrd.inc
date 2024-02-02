@@ -18,6 +18,7 @@ FEATURE_PACKAGES_debug-tweaks = "\
 
 BAD_RECOMMENDATIONS += "\
     busybox-udhcpc \
+    ca-certificates \
     ncurses-terminfo-base \
     lvm2-scripts \
     lvm2-udevrules \
