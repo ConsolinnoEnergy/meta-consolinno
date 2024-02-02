@@ -20,9 +20,11 @@ inherit core-image
 IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-1u0022 \
-	docker \
-	python3-docker-compose \
+	docker-ce \
+	docker-compose \
 	crun \
+	podman \
+	podman-compose \
 "
 
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
@@ -32,5 +34,6 @@ PACKAGE_EXCLUDE_COMPLEMENTARY += "\
 BBLAYERS ?= " \
 	${SOURCES_ROOT}/meta-virtualization\
 	${SOURCES_ROOT}/meta-selinux \
+	${SOURCES_ROOT}/meta-lmp-base \
 	${SOURCES_ROOT}/org.openembedded.meta/meta-filesystems \
 "
