@@ -1,8 +1,6 @@
 LICENSE = "CLOSED"
 
 _IMAGE_FEATURES_RELEASE ??= ""
-## TODO: replace this by ssh authkey or so
-_IMAGE_FEATURES_RELEASE += "empty-root-password"
 
 _IMAGE_FEATURES_DEBUG ??= "debug-tweaks"
 
