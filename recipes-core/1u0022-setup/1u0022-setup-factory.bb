@@ -6,6 +6,7 @@ RDEPENDS:${PN} += "\
     bash \
     busybox \
     busybox-udhcpc \
+    ca-certificates-1u0022 \
     coreutils \
     cryptsetup \
     e2fsprogs-mke2fs \
