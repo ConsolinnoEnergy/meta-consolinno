@@ -21,6 +21,7 @@ IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-1u0022 \
 	docker \
+	python3-docker-compose \
 "
 
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
