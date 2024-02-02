@@ -22,6 +22,7 @@ IMAGE_INSTALL += "\
     packagegroup-1u0022 \
 	docker \
 	python3-docker-compose \
+	crun \
 "
 
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
