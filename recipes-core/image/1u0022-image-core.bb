@@ -25,3 +25,9 @@ IMAGE_INSTALL += "\
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
     dtc \
 "
+
+BBLAYERS ?= " \
+	${SOURCES_ROOT}/meta-virtualization\
+	${SOURCES_ROOT}/meta-selinux \
+	${SOURCES_ROOT}/org.openembedded.meta/meta-filesystems \
+"
