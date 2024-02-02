@@ -22,8 +22,6 @@ IMAGE_INSTALL += "\
     packagegroup-1u0022 \
 	docker-ce \
 	crun \
-	podman \
-	podman-compose \
 "
 
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
@@ -33,6 +31,5 @@ PACKAGE_EXCLUDE_COMPLEMENTARY += "\
 BBLAYERS ?= " \
 	${SOURCES_ROOT}/meta-virtualization\
 	${SOURCES_ROOT}/meta-selinux \
-	${SOURCES_ROOT}/meta-lmp-base/meta-lmp-base \
 	${SOURCES_ROOT}/org.openembedded.meta/meta-filesystems \
 "
