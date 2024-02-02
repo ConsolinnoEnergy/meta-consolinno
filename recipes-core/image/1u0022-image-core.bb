@@ -21,7 +21,7 @@ inherit core-image
 IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-1u0022 \
-	docker
+	docker \
 "
 
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
