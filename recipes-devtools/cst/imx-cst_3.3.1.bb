@@ -12,6 +12,7 @@ SRCREV = "e2c687a856e6670e753147aacef42d0a3c07891a"
 SRC_URI = " \
     file://0001-fix-err-msg-linking.patch \
     git://gitlab.apertis.org/pkg/imx-code-signing-tool.git;protocol=https;branch=apertis/v2022pre \
+    file://single-pem.patch \
 "
 
 S = "${WORKDIR}/git"

@@ -1,0 +1,15 @@
+Index: git/code/cst/code/back_end/src/pkey.c
+===================================================================
+--- git.orig/code/cst/code/back_end/src/pkey.c
++++ git/code/cst/code/back_end/src/pkey.c
+@@ -149,6 +149,10 @@ int32_t get_key_file(const char* cert_fi
+     strcpy(key_file, cert_file);
+     key_file[i] = 0;
+ 
++    if (i >= 7 && strcmp(&key_file[i - 7], "crt.pem") != 0)
++        /* assume single crt + key file */
++        return CAL_SUCCESS;
++
+     key_file[i-5] = 'y';
+     key_file[i-6] = 'e';
+     key_file[i-7] = 'k';
