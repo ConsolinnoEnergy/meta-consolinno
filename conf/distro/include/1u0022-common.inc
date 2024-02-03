@@ -44,5 +44,30 @@ L1U0022_IMAGE_CRT_FILE ??= "${L1U0022_IMAGE_CA_PATH}/image.crt"
 
 L1U0022_IMAGE_KEY_HINT ??= "l1u0022-signing-key"
 
+#### HAB
+
+L1U0022_HAB_CA_PATH    ??= "${_L1U0022_CA_PATH_EXPANDED}/hab"
+L1U0022_HAB_CA_PATH[doc] = "\
+    Base directory of HAB CA; beside the entries listed below a file \
+    with an hardcoded name 'key_pass.txt' is expected there. \
+"
+
+L1U0022_HAB_SRK_INDEX  ??= "0"
+L1U0022_HAB_TABLE_BIN  ??= "${L1U0022_HAB_CA_PATH}/SRK.table.bin"
+
+L1U0022_HAB_CSF_BASE   ??= "${L1U0022_HAB_CA_PATH}/CSF.pem"
+L1U0022_HAB_CSF_BASE[doc] = "\
+    CSF certificate; when ending in '_crt.pem' another file with a \
+    '_key.pem' suffix is expected which contains the corresponding \
+    private key\
+"
+
+L1U0022_HAB_IMG_BASE   ??= "${L1U0022_HAB_CA_PATH}/IMG.pem"
+L1U0022_HAB_IMG_BASE[doc] = "\
+    IMG certificate; when ending in '_crt.pem' another file with a \
+    '_key.pem' suffix is expected which contains the corresponding \
+    private key\
+"
+
 ### misc settings
 ROOT_HOME = "/root"
