@@ -9,7 +9,7 @@ BAREBOX_DEFCONFIG ??= "${WORKDIR}/defconfig"
 KCONFIG_DEFCONFIG = "${BAREBOX_DEFCONFIG}"
 
 BAREBOX_DEPLOY_NAME ??= "barebox"
-BAREBOX_IMG_TYPES ??= "img"
+BAREBOX_IMG_TYPES ??= ".img"
 BAREBOX_IMG_TYPES[type] = "list"
 
 inherit kernel-arch elito-kconfig
@@ -56,15 +56,15 @@ _run_install() {
 	    first=
 	    for b in ${IMGBASE}; do
 		test -n "$first" || first=${BAREBOX_DEPLOY_NAME}-$b-${PV}-${PR}
-		s=${B}/images/barebox-$b.$img
-                t=${BAREBOX_DEPLOY_NAME}-$b-${PV}-${PR}.$img
-		l=${BAREBOX_DEPLOY_NAME}-$b.$img
+		s=${B}/images/barebox-$b$img
+                t=${BAREBOX_DEPLOY_NAME}-$b-${PV}-${PR}$img
+		l=${BAREBOX_DEPLOY_NAME}-$b$img
 
 		install -p -m 0644 "$s" "$1/$t"
 		ln -sf "$t" "$1/$l"
 	    done
 
-	    ln -sf "$first".$img                          "$1"/${BAREBOX_DEPLOY_NAME}.$img
+	    ln -sf "$first"$img                          "$1"/${BAREBOX_DEPLOY_NAME}$img
 	done
 }
 
