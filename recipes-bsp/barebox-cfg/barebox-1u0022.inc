@@ -5,7 +5,12 @@ BAREBOX_DEFCONFIG = "${S}/arch/arm/configs/imx_v7_defconfig"
 
 IMGBASE:consolinno-leaflet-1u0022-1 = "imx6ull-consolinno-1u0022"
 
+BAREBOX_IMG_TYPES:append = "\
+    ${@bb.utils.contains('MACHINE_FEATURES', 'habv4', ' -es.img -s.img -us.img', '', d)} \
+"
+
 DEPENDS += "openssl-native"
+DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'habv4', 'imx-cst-native', '', d)}"
 
 inherit barebox-environment-3
 require barebox-passwd.inc
@@ -14,6 +19,7 @@ CFGSET = "\
     file://optimize.cfg \
     file://cpu.cfg \
     ${@bb.utils.contains('MACHINE_FEATURES', 'fitimage', 'file://fitimage.cfg', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'habv4',    'file://habv4.cfg',    '', d)} \
 \
     file://hw.cfg \
     file://hardening.cfg \
@@ -38,6 +44,12 @@ kernel_generate_dynamic_cfg:append() {
     printf 'CONFIG_BOOTM_FITIMAGE_PUBKEY_ENV=y\n' >> ${CFG_DYNAMIC}
     printf 'CONFIG_CRYPTO_RSA_KEY="%s"\n'           '${L1U0022_IMAGE_CRT_FILE}' >> ${CFG_DYNAMIC}
     printf 'CONFIG_CRYPTO_RSA_KEY_NAME_HINT="%s"\n' '${L1U0022_IMAGE_KEY_HINT}' >> ${CFG_DYNAMIC}
+
+    ## HABv4
+    printf 'CONFIG_HABV4_SRK_INDEX=%d\n'            '${L1U0022_HAB_SRK_INDEX}'  >> ${CFG_DYNAMIC}
+    printf 'CONFIG_HABV4_TABLE_BIN="%s"\n'          '${L1U0022_HAB_TABLE_BIN}'  >> ${CFG_DYNAMIC}
+    printf 'CONFIG_HABV4_CSF_CRT_PEM="%s"\n'        '${L1U0022_HAB_CSF_BASE}'   >> ${CFG_DYNAMIC}
+    printf 'CONFIG_HABV4_IMG_CRT_PEM="%s"\n'        '${L1U0022_HAB_IMG_BASE}'   >> ${CFG_DYNAMIC}
 
     if ${@bb.utils.contains('DISTRO_FEATURES', 'release', 'true', 'false', d)}; then
         printf 'CONFIG_BOOTM_FORCE_SIGNED_IMAGES=y\n'
