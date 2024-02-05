@@ -2,6 +2,8 @@ rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
 rpcuser:x:55:55:RPC Service User:/var/lib/nfs:/sbin/nologin
 sshd:x:74:74::/var/run/sshd:/bin/false
 
+docker:!:136
+
 bind:!:240
 tss:!:250
 
