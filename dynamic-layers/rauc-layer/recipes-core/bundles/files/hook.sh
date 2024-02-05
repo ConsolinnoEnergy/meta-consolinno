@@ -16,4 +16,8 @@ case "$1:$RAUC_SLOT_CLASS" in
 	mount -o remount,rw $(dirname "$RAUC_SLOT_DEVICE")
 	truncate -s "$RAUC_IMAGE_SIZE" "$RAUC_SLOT_DEVICE"
 	;;
+
+  slot-post-install:fitimage)
+	mount -o remount,ro $(dirname "$RAUC_SLOT_DEVICE")
+	;;
 esac

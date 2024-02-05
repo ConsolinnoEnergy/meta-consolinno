@@ -27,7 +27,7 @@ RAUC_SLOT_rootfs[type] = "image"
 RAUC_SLOT_rootfs[fstype] = "ext4"
 
 RAUC_SLOT_fitimage = "${L1U0022_INITRD_RECIPE}"
-RAUC_SLOT_fitimage[hooks] = "pre-install"
+RAUC_SLOT_fitimage[hooks] = "pre-install;post-install"
 RAUC_SLOT_fitimage[type] = "kernel"
 RAUC_SLOT_fitimage[file] = "${L1U0022_INITRD_IMG}"
 RAUC_SLOT_fitimage[fstype] = "raw"
