@@ -20,3 +20,7 @@ FEATURE_PACKAGES_tpm2 ="\
 FEATURE_PACKAGES_tpm2-device = "\
     libtss2-tcti-device \
 "
+
+FEATURE_PACKAGES_virtualization += "\
+    docker-ce \
+"
