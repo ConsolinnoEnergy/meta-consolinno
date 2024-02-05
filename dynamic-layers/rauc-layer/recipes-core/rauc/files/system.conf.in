@@ -2,6 +2,7 @@
 compatible=${MACHINE}
 bootloader=barebox
 mountprefix=/run/mnt/rauc
+data-directory=/srv/.rauc
 
 #[handlers]
 #pre-install=/lib/rauc/pre-install
