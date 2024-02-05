@@ -1,0 +1,16 @@
+name: Generic merge request checks
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Check for whitespace errors
+      run: |
+        git diff-tree --check "origin/$GITHUB_BASE_REF".."origin/$GITHUB_HEAD_REF" -- . ':!*.patch'
