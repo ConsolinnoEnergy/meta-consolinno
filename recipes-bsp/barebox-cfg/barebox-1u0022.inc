@@ -20,6 +20,7 @@ CFGSET = "\
     file://cpu.cfg \
     ${@bb.utils.contains('MACHINE_FEATURES', 'fitimage', 'file://fitimage.cfg', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'habv4',    'file://habv4.cfg',    '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'usbgadget', 'file://usb-otg.cfg',  '', d)} \
 \
     file://hw.cfg \
     file://hardening.cfg \
