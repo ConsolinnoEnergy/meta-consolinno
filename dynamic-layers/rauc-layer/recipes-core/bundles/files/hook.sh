@@ -11,6 +11,8 @@ case "$1:$RAUC_SLOT_CLASS" in
 	;;
 
   slot-pre-install:fitimage)
+	# ensure that /boot is mounted (required for systemd automount)
+	test -e /boot/.
 	mount -o remount,rw $(dirname "$RAUC_SLOT_DEVICE")
 	truncate -s "$RAUC_IMAGE_SIZE" "$RAUC_SLOT_DEVICE"
 	;;
