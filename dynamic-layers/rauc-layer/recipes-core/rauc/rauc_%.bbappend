@@ -10,6 +10,12 @@ SED_SYSTEM_CONF = "\
     -e 's!${'MACHINE'}!${MACHINE}!g' \
 "
 
+EXTERNAL_FILES += "\
+    ${RAUC_KEYRING_URI} \
+"
+
+inherit external-file
+
 do_expand_system_conf[dirs] = "${WORKDIR}"
 do_expand_system_conf() {
     rm -f system.conf
