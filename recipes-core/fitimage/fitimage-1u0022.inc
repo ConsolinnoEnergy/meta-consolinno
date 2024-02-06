@@ -14,6 +14,11 @@ FITIMAGE_SIGNING_ALGO ??= "sha256,rsa4096"
 FITIMAGE_SIGNING_KEY_NAME = "${L1U0022_IMAGE_KEY_HINT}"
 FITIMAGE_SIGNING_KEY = "${L1U0022_IMAGE_KEY_FILE}"
 
+EXTERNAL_FILES += "\
+    ${L1U0022_IMAGE_KEY_FILE} \
+    ${L1U0022_IMAGE_CRT_FILE} \
+"
+
 def get_dtbs(d, suffix, var):
     all_dtbs = (d.getVar(var, True) or "").split()
     all_dtbs = filter(lambda x: x.endswith(suffix), all_dtbs)
@@ -21,6 +26,7 @@ def get_dtbs(d, suffix, var):
     return ' '.join(sorted(all_dtbs))
 
 inherit fitimage
+inherit external-file
 
 IMAGE_CMD:fit = "\
     mkimage ${EXTRA_IMAGECMD} \
