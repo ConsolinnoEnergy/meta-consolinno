@@ -6,4 +6,5 @@ SRC_URI += "\
 
 do_install:append() {
     cat ${WORKDIR}/fstab.1u0022 >> ${D}${sysconfdir}/fstab
+    install -d -m 0100 ${D}/data
 }
