@@ -12,7 +12,17 @@ BAREBOX_IMG_TYPES:append = "\
 DEPENDS += "openssl-native"
 DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'habv4', 'imx-cst-native', '', d)}"
 
+EXTERNAL_FILES = "\
+    ${L1U0022_IMAGE_CRT_FILE} \
+    ${L1U0022_HAB_SRK_INDEX} \
+    ${L1U0022_HAB_TABLE_BIN} \
+    ${L1U0022_HAB_CSF_BASE} \
+    ${L1U0022_HAB_IMG_BASE} \
+    ${L1U0022_HAB_CA_PATH}/key_pass.txt \
+"
+
 inherit barebox-environment-3
+inherit external-file
 require barebox-passwd.inc
 
 CFGSET = "\
