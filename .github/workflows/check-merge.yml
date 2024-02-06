@@ -14,3 +14,8 @@ jobs:
     - name: Check for whitespace errors
       run: |
         git diff-tree --check "origin/$GITHUB_BASE_REF".."origin/$GITHUB_HEAD_REF" -- . ':!*.patch'
+
+    - name: Check for missing newlines
+      run: |
+        git diff "origin/$GITHUB_BASE_REF".."origin/$GITHUB_HEAD_REF" -- . ':!*.patch' > /tmp/diff.total
+        ! grep '^\(diff\|\\\)' /tmp/diff.total | grep -B 1 '^\\'
