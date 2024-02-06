@@ -3,12 +3,18 @@
 LICENSE = "CLOSED"
 
 inherit bundle
+inherit external-file
 
 SRC_URI += "\
     file://hook.sh \
 "
 
 PV = "${DISTRO_VERSION}"
+
+EXTERNAL_FILES += "\
+    ${L1U0022_RAUC_KEY_FILE} \
+    ${L1U0022_RAUC_CRT_FILE} \
+"
 
 RAUC_BUNDLE_COMPATIBLE = "${MACHINE}"
 RAUC_BUNDLE_DESCRIPTION = "${L1U0022_BASE_IMG} bundle"
