@@ -19,3 +19,8 @@ RDEPENDS:${PN} += "\
     util-linux-sfdisk \
     util-linux-wipefs \
 "
+
+do_install:append() {
+	install -m 0400 /dev/null ${D}${sysconfdir}/preliminary-key
+	echo '${TPM_DEV_SECRET}' > ${D}${sysconfdir}/preliminary-key
+}

@@ -8,3 +8,8 @@ RDEPENDS:${PN} += "\
     lvm2 \
     tpm2-tools \
 "
+
+do_install:append() {
+	install -m 0400 /dev/null ${D}${sysconfdir}/preliminary-key
+	echo '${TPM_DEV_SECRET}' > ${D}${sysconfdir}/preliminary-key
+}
