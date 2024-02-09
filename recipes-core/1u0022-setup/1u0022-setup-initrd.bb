@@ -7,6 +7,7 @@ RDEPENDS:${PN} += "\
     cryptsetup \
     lvm2 \
     tpm2-tools \
+    util-linux-switch-root \
 "
 
 do_install:append() {
