@@ -1,2 +1,4 @@
 /dev/vg00/data	/srv	ext4	x-systemd.automount		1 1
 /srv/.data	/data	none	x-systemd.automount,bind
+
+/dev/mmcblk1p3  /boot   ext4	x-systemd.automount		1 1
