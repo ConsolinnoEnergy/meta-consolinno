@@ -20,6 +20,7 @@ RRECOMMENDS:${PN} += "\
     util-linux \
     valgrind \
     tcpdump \
+    sysstat \
     systemd-analyze \
 \
     file \
