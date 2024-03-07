@@ -21,4 +21,7 @@ systemd-journal-gateway:!:285
 systemd-journal-remote:!:286
 systemd-journal-upload:!:287
 
+
+zabbix:!:1100
+
 nogroup:x:65534:
