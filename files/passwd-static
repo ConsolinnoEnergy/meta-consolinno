@@ -17,3 +17,7 @@ systemd-timesync:!:284
 systemd-journal-gateway:!:285
 systemd-journal-remote:!:286
 systemd-journal-upload:!:287
+
+zabbix:!:1100
+avahi:!:1200
+avahi-autoipd:!:1300
