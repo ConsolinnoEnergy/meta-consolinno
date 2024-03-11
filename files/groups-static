@@ -23,5 +23,6 @@ systemd-journal-upload:!:287
 
 
 zabbix:!:1100
+avahi:!:1200
 
 nogroup:x:65534:
