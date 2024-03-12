@@ -22,8 +22,8 @@ systemd-journal-remote:!:286
 systemd-journal-upload:!:287
 
 
-zabbix:!:1100
-avahi:!:1200
-avahi-autoipd:!:1300
+zabbix:!:310
+avahi:!:320
+avahi-autoipd:!:330
 
 nogroup:x:65534:
