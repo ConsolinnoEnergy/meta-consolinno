@@ -1,9 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/ca-certificates:"
 
 SRC_URI += "\
-    file://1u0022-top-ca.crt \
     file://1u0022-image-ca.crt \
-    file://1u0022-config-ca.crt \
     file://ca-consolinno-root.crt \
     file://se-ca-chain.pem \
 "
@@ -15,9 +13,7 @@ do_install:prepend() {
     d='${D}${datadir}/ca-certificates'
     install -d "$d"
 
-    install -p -m 0644 ${WORKDIR}/1u0022-top-ca.crt    "$d"/
     install -p -m 0644 ${WORKDIR}/1u0022-image-ca.crt  "$d"/
-    install -p -m 0644 ${WORKDIR}/1u0022-config-ca.crt "$d"/
     install -p -m 0644 ${WORKDIR}/ca-consolinno-root.crt "$d"/
     install -p -m 0644 ${WORKDIR}/se-ca-chain.pem "$d"/
 }
