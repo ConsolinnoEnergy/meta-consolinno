@@ -1,5 +1,5 @@
 SUMMARY = "Sets hostname"
-DESCRIPTION = "This service sets the hostname on boot based on the file /src/hostname"
+DESCRIPTION = "This service sets the hostname on boot based on the file /srv/hostname"
 
 LICENSE = "CLOSED"
 
