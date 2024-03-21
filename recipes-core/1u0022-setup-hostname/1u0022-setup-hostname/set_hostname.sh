@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/sh
 
 if [ -f /srv/hostname ]; then
     NEW_HOSTNAME=$(cat /srv/hostname)

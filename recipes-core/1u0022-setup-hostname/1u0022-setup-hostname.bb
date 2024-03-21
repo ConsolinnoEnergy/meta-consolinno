@@ -3,6 +3,8 @@ DESCRIPTION = "This service sets the hostname on boot based on the file /src/hos
 
 LICENSE = "CLOSED"
 
+inherit systemd
+
 SRC_URI = "file://sethostname.service \
            file://set_hostname.sh \
            "
@@ -13,4 +15,7 @@ do_install() {
     install -D -p -m 0755 ${WORKDIR}/set_hostname.sh ${D}${sbindir}/set_hostname
 }
 
-FILES_${PN} += "${systemd_unitdir}/system/sethostname.service"
+FILES:${PN} += "\
+    ${sbindir}/set_hostname \
+    ${systemd_unitdir}/system/sethostname.service \
+"
