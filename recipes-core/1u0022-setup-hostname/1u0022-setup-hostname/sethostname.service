@@ -5,7 +5,7 @@ Wants=basic.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/set_hostname.sh
+ExecStart=/usr/sbin/set_hostname
 
 [Install]
 WantedBy=multi-user.target
