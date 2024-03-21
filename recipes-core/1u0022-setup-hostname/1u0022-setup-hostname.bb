@@ -1,6 +1,8 @@
 SUMMARY = "Sets hostname"
 DESCRIPTION = "This service sets the hostname on boot based on the file /src/hostname"
 
+LICENSE = "CLOSED"
+
 SRC_URI = "file://sethostname.service \
            file://set_hostname.sh \
            "
