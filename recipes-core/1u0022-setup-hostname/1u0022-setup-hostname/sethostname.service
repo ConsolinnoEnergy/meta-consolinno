@@ -1,7 +1,7 @@
 [Unit]
 Description=Set Hostname
-After=network-online.target
-Wants=network-online.target
+After=basic.target
+Wants=basic.target
 
 [Service]
 Type=oneshot
