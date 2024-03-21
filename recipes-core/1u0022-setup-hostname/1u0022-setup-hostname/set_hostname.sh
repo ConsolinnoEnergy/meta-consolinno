@@ -7,4 +7,5 @@ else
     exit 1
 fi
 
-hostnamectl set-hostname "$NEW_HOSTNAME"
+echo $NEW_HOSTNAME > /tmp/hostname
+mount --bind /tmp/hostname /etc/hostname

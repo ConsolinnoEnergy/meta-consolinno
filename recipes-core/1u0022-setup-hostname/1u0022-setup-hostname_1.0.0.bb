@@ -5,6 +5,9 @@ LICENSE = "CLOSED"
 
 inherit systemd
 
+SYSTEMD_AUTO_ENABLE = "enable"
+SYSTEMD_SERVICE:${PN} = "sethostname.service"
+
 SRC_URI = "file://sethostname.service \
            file://set_hostname.sh \
            "
