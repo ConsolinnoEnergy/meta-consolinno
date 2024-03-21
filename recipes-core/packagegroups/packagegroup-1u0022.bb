@@ -17,6 +17,7 @@ RDEPENDS:${PN} += "\
     iptables \
 \
     1u0022-setup-system \
+    1u0022-setup-hostname \
     lvm2 \
     e2fsprogs-resize2fs \
     mmc-utils \

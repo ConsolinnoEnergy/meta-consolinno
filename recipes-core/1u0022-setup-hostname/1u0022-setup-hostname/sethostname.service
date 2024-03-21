@@ -1,0 +1,11 @@
+[Unit]
+Description=Set Hostname
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/set_hostname.sh
+
+[Install]
+WantedBy=multi-user.target
