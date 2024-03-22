@@ -13,12 +13,12 @@ SRC_URI = "file://sethostname.service \
            "
 
 do_install() {
-    install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${WORKDIR}/sethostname.service ${D}${systemd_unitdir}/system/
+    install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/sethostname.service ${D}${systemd_system_unitdir}
     install -D -p -m 0755 ${WORKDIR}/set_hostname.sh ${D}${sbindir}/set_hostname
 }
 
 FILES:${PN} += "\
     ${sbindir}/set_hostname \
-    ${systemd_unitdir}/system/sethostname.service \
+    ${systemd_system_unitdir}/sethostname.service \
 "
