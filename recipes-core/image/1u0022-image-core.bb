@@ -26,3 +26,11 @@ IMAGE_INSTALL += "\
 PACKAGE_EXCLUDE_COMPLEMENTARY += "\
     dtc \
 "
+
+inherit extrausers
+
+_EXTRA_USERS_PARAMS_release = "usermod -p '$(cat ${DEPLOY_DIR_IMAGE}/root.passwd)' root;"
+
+EXTRA_USERS_PARAMS += "${@bb.utils.contains('DISTRO_FEATURES', 'release', d.getVar('_EXTRA_USERS_PARAMS_release'), '', d)}"
+
+do_rootfs[depends] += "deploy-passwd:do_deploy"
