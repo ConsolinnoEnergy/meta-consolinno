@@ -2,6 +2,7 @@
 Description=Set Hostname
 DefaultDependencies=no
 RequiresMountsFor=/srv
+ConditionFileNotEmpty=/srv/hostname
 Before=sysinit.target
 
 [Service]
