@@ -4,8 +4,9 @@ bootloader=barebox
 mountprefix=/run/mnt/rauc
 data-directory=/srv/.rauc
 
-#[handlers]
+[handlers]
 #pre-install=/lib/rauc/pre-install
+post-install=/usr/lib/rauc/post-install
 
 [keyring]
 path=ca.cert.pem
