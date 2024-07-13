@@ -1,0 +1,42 @@
+From e16dc308ea5d9272f75485f2cbf6fc950b8e4418 Mon Sep 17 00:00:00 2001
+From: Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+Date: Sat, 13 Jul 2024 12:01:32 +0200
+Subject: [PATCH] imx: do not apply errata 845369 for single core
+
+The workaround slows down certain memory write operations
+significantly.
+
+It is not needed for iMX6 single core processors; disable it when
+possible.
+
+Signed-off-by: Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+---
+ arch/arm/mach-imx/cpu_init.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-imx/cpu_init.c b/arch/arm/mach-imx/cpu_init.c
+index c5a47d9b9154..289cd5d5c184 100644
+--- a/arch/arm/mach-imx/cpu_init.c
++++ b/arch/arm/mach-imx/cpu_init.c
+@@ -7,6 +7,7 @@
+ #include <linux/types.h>
+ #include <linux/bitops.h>
+ #include <mach/imx/generic.h>
++#include <mach/imx/imx6.h>
+ #include <mach/imx/imx7-regs.h>
+ #include <mach/imx/imx8mq-regs.h>
+ #include <mach/imx/imx8m-ccm-regs.h>
+@@ -40,7 +41,9 @@ void imx6_cpu_lowlevel_init(void)
+ 	enable_arm_errata_751472_war();
+ 	enable_arm_errata_761320_war();
+ 	enable_arm_errata_794072_war();
+-	enable_arm_errata_845369_war();
++
++	if (scu_get_core_count() > 1)
++		enable_arm_errata_845369_war();
+ }
+ 
+ void imx6ul_cpu_lowlevel_init(void)
+-- 
+2.45.2
+
