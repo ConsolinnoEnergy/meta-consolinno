@@ -1,8 +1,8 @@
 ## --*- bitbake -*--
 
 TCLIBCAPPEND = ""
-DISTRO_VERSION = "0.0"
-DISTRO_NAME = "consolinno leaflet distro"
+DISTRO_VERSION ?= "0.0"
+DISTRO_NAME ?= "consolinno leaflet distro"
 
 ### core distro settings
 
