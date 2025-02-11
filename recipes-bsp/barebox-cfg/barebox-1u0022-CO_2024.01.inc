@@ -48,6 +48,8 @@ ENVSET += "\
 "
 
 PATCHSET += "\
+    file://0000-generic.patch \
+    file://0001-imx-do-not-apply-errata-845369-for-single-core.patch \
 "
 
 kernel_generate_dynamic_cfg:append() {
