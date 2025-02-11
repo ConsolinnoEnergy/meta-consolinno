@@ -6,6 +6,14 @@ set -x
 
 eMMC_device=/dev/mmcblk1
 
+_get_active_bootpart() {
+  local partnum=$(/usr/bin/mmc extcsd read /dev/mmcblk1 |/usr/bin/grep -E 'Boot Partition.*enabled'|sed -e 's/^\(.*Boot\ Partition\ \)\([1,2]\)\ enabled/\2/g')
+  #fallback 1
+  test -z "$partnum" && partnum=1
+  echo $partnum
+}
+
+
 _install_bootloader() {
     local image="$1"
     local idx="$2"
@@ -41,17 +49,34 @@ _is_installed_bootloader() {
 }
 
 RAUC_BUNDLE_MOUNT_PATH=$(realpath $(dirname $0))
+
+# this should be a secure method to update the barebox bootloader in field:
+# security is ensured by:
+# 1. no unnecessary write attempts, first binary compare the active bootloader with the update file
+# 2. always write the update file to the inactive emmc boot[0/1] Partition, never touch the active partition
+# 3. after successfully written switch the enabled bootpartition by an atomic operation
 update_bootloader() {
     local image
     image="$(ls ${RAUC_BUNDLE_MOUNT_PATH}/barebox*.img)"
 	  [ -f "$image" ] || { echo "error: no barebox image found"; return 1; }
-
-    _is_installed_bootloader "${image}" 0 || _install_bootloader "${image}" 0 
-    _is_installed_bootloader "${image}" 1 || _install_bootloader "${image}" 1 
-
-	#switching enabled bootpart probably requires reconfiguration of imx6ull boot config, so better don't touch
-    # mmc bootpart enable 1 0 ${eMMC_device}
-    # mmc bootpart enable 2 0 ${eMMC_device}
+    local inactive=0
+    local active=$(($(_get_active_bootpart) - 1))
+    if [ $active -eq 1 ]; then
+      inactive=0
+    else 
+      inactive=1
+    fi
+    if ! _is_installed_bootloader "${image}" ${active} ; then 
+      echo "installing to inactive boot${inactive} partition ..."
+      _install_bootloader "${image}" ${inactive}
+      rc=$?
+      if [ $rc -eq 0 ]; then
+        echo "switch bootpartition by /usr/bin/mmc bootpart enable $(($inactive + 1)) 0 ${eMMC_device}"
+        /usr/bin/mmc bootpart enable $(($inactive + 1)) 0 ${eMMC_device}
+      else
+        echo "error writing inactive boot partition"
+      fi 
+    fi
 }
 
 echo "$0 $1:$RAUC_SLOT_CLASS"
