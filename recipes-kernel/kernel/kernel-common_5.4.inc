@@ -2,11 +2,6 @@
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 BASE_PV = "5.4"
-PV = "5.4.289"
-
-#cve-check fuer genau diese version
-#CVE_PRODUCT = "kernel-1u0022"
-CVE_VERSION = "5.4.289"
 
 require kernel-common.inc
 
@@ -22,5 +17,3 @@ SRCREV_kernel_uapihdr_5.4 ?= "2ab1b7ad50466422ac8966f67a92452718865ac2"
 
 SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.289}"
 
-SRCREV_kernel_uapihdr_5.4.289 ?= "${SRCREV_kernel_uapihdr_5.4}"
-SRCREV_kernel_5.4.289         ?= "${SRCREV_kernel_5.4}"
