@@ -3,7 +3,7 @@ LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = "${@l1u0022_internal_component_uri(d, '1u0022-setup')}"
-SRCREV  = "b2e23af6e92d612190c0dbfa19aaa0f23d702c4f"
+SRCREV  = "8360ded6d7e92892190b623101690a7977559ab0"
 
 inherit 1u0022-internal-component
 inherit features_check
