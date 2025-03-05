@@ -8,6 +8,12 @@
 INCPATH = "."
 
 require ${INCPATH}/kernel-common_5.4.inc
+
+#set full version to clarify cve-check output
+PV = "5.4.289+git${SRCPV}"
+SRCREV_kernel_uapihdr_${PV} ?= "${SRCREV_kernel_uapihdr_5.4}"
+SRCREV_kernel_${PV}         ?= "${SRCREV_kernel_vanilla_5.4.289}"
+
 require ${INCPATH}/kernel-target.inc
 
 # DEPENDS += "openssl-native"

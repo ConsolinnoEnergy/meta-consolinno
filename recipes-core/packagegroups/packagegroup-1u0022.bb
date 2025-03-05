@@ -21,6 +21,7 @@ RDEPENDS:${PN} += "\
     lvm2 \
     e2fsprogs-resize2fs \
     mmc-utils \
+    gptfdisk \
 "
 
 RRECOMMENDS:${PN} += "\
