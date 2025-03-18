@@ -8,5 +8,5 @@ CFGSET = "\
 
 PATCHSET = "\
     file://0000-generic.patch \
-    file://conegx-driver-v1-3-0.patch \
+    file://conegx-driver-v1-3-1.patch \
 "
