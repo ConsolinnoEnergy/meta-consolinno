@@ -11,9 +11,10 @@ require kernel-common.inc
 #SRCREV_kernel_vanilla_5.4.288 ?= "b783bf0ebfecc8d5a5fd0cd5441e5a9d330e8992"
 # 5.4.289 (9.01.25)
 SRCREV_kernel_vanilla_5.4.289 ?= "7dda48bae35812dd7e852cc09cce410c15e3d7db"
+# 5.4.293 (2.06.25)
+SRCREV_kernel_vanilla_5.4.293 ?= "2c8115e4757809ffd537ed9108da115026d3581f"
 
+
+SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.293}"
 SRCREV_kernel_uapihdr_5.4 ?= "2ab1b7ad50466422ac8966f67a92452718865ac2"
-
-
-SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.289}"
 
