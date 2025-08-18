@@ -15,7 +15,9 @@ SRCREV_kernel_vanilla_5.4.289 ?= "7dda48bae35812dd7e852cc09cce410c15e3d7db"
 SRCREV_kernel_vanilla_5.4.293 ?= "2c8115e4757809ffd537ed9108da115026d3581f"
 # 5.4.294 (6.06.25)
 SRCREV_kernel_vanilla_5.4.294 ?= "44613a259decccddd2bd4520f73cc4d5107546c6"
+# 5.4.294 (17.07.25)
+SRCREV_kernel_vanilla_5.4.296 ?= "bc4f0eb3c5ecee4a80a333b912ed29c225703b27"
 
-SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.294}"
+SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.296}"
 SRCREV_kernel_uapihdr_5.4 ?= "2ab1b7ad50466422ac8966f67a92452718865ac2"
 
