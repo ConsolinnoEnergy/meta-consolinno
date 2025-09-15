@@ -19,7 +19,12 @@ SRCREV_kernel_vanilla_5.4.294 ?= "44613a259decccddd2bd4520f73cc4d5107546c6"
 SRCREV_kernel_vanilla_5.4.296 ?= "bc4f0eb3c5ecee4a80a333b912ed29c225703b27"
 # 5.4.297 (28.08.25)
 SRCREV_kernel_vanilla_5.4.297 ?= "c25f780e491e4734eb27d65aa58e0909fd78ad9f"
+# 5.4.299 (09.09.25)
+SRCREV_kernel_vanilla_5.4.299 ?= "08c21a7a8d77131bb79b4611d19d9f45844053a8"
 
-SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.297}"
+
+SRCREV_kernel_5.4         ?= "${SRCREV_kernel_vanilla_5.4.299}"
 SRCREV_kernel_uapihdr_5.4 ?= "2ab1b7ad50466422ac8966f67a92452718865ac2"
 
+#set full version to clarify cve-check output
+PV = "5.4.299+git${SRCPV}"
